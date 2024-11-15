@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feliz 3cer Mes</title>
+  <style>
+
+    /* Incluir la fuente desde un archivo local */
+    @font-face {
+      font-family: 'Dream Flourish';
+      src: url("fonts/Heatter - PERSONAL USE ONLY.otf") format('truetype'); /* Asegúrate de que la ruta sea correcta */
+    }
+
+    /* Estilos generales */
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #f7e0e0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Dream Flourish', sans-serif;
+      color: #333;
+    }
+
+    /* Fondo de corazones animados */
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: #ff6b6b;
+      transform: rotate(45deg);
+      animation: floatUp 7s infinite ease-in-out;
+      border-radius: 50% 50% 0 0;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: #ff6b6b;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      top: 0;
+      left: -10px;
+    }
+
+    /* Animación de subida */
+    @keyframes floatUp {
+      0% {
+        transform: scale(0.5) translateY(0);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1.2) translateY(-100vh);
+        opacity: 0;
+      }
+    }
+
+    /* Corazón pulsante central detrás del texto */
+    .central-heart {
+      position: absolute;
+      top: 50%;
+      left: 45%;
+      transform: translate(-50%, -50%) rotate(45deg);
+      width: 150px;
+      height: 150px;
+      background-color: #ff6b6b;
+      animation: heartbeat 1.5s infinite ease-in-out;
+      border-radius: 50% 50% 0 0;
+      opacity: 0.3;
+      z-index: 0;
+    }
+
+    .central-heart::before,
+    .central-heart::after {
+      content: '';
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      background-color: #ff6b6b;
+      border-radius: 50%;
+    }
+
+    .central-heart::before {
+      top: -75px;
+      left: 0;
+    }
+
+    .central-heart::after {
+      top: 0;
+      left: -75px;
+    }
+
+    /* Animación de latido */
+    @keyframes heartbeat {
+      0%, 100% {
+        transform: scale(1) rotate(45deg);
+      }
+      50% {
+        transform: scale(1.2) rotate(45deg);
+      }
+    }
+
+    /* Texto personalizado con animación de latido y movimiento */
+    .text-container {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      font-size: 2.5rem;
+      color: #ff6b6b;
+      font-weight: bold;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      font-family: 'Dream Flourish', sans-serif;
+      animation: slideSide 5s infinite ease-in-out;
+    }
+
+    /* Animación de movimiento lateral */
+    @keyframes slideSide {
+      0%, 100% {
+        transform: translateX(0);
+      }
+      50% {
+        transform: translateX(20px);
+      }
+    }
+
+    /* Estilo para el botón de audio */
+    .audio-button {
+      position: absolute;
+      bottom: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px 20px;
+      background-color: #ff6b6b;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 3;
+      font-family: 'Dream Flourish', sans-serif;
+    }
+
+    .audio-button:hover {
+      background-color: #ff4949;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Corazón central que palpita en el fondo -->
+  <div class="central-heart"></div>
+
+  <!-- Texto central -->
+  <div class="text-container">
+    <h1>Feliz 3cer mes mi amor, mi princesa; bella, hermosa te amo ❤️</h1>
+  </div>
+
+  <!-- Corazones animados -->
+  <script>
+    // Función para crear corazones flotantes
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.top = Math.random() * 100 + 'vh';
+      heart.style.animationDuration = Math.random() * 5 + 3 + 's';
+      document.body.appendChild(heart);
+
+      // Remueve el corazón del DOM después de la animación
+      setTimeout(() => {
+        heart.remove();
+      }, 7000);
+    }
+
+    // Crear corazones cada 200ms
+    setInterval(createHeart, 200);
+  </script>
+
+  <!-- Botón para reproducir y pausar la música -->
+  <button class="audio-button" onclick="toggleAudio()">Reproducir Música</button>
+
+  <!-- Música de fondo (archivo MP3 en Google Drive) -->
+  <audio id="audio" preload="auto">
+    <source src="audios/angel.mp3" type="audio/mpeg">
+    Tu navegador no soporta el elemento de audio.
+  </audio>
+
+  <script>
+    let audioElement = document.getElementById('audio');
+    let audioButton = document.querySelector('.audio-button');
+
+    // Función para reproducir y pausar la música
+    function toggleAudio() {
+      if (audioElement.paused) {
+        audioElement.play();
+        audioButton.textContent = 'Pausar Música'; // Cambia el texto del botón
+      } else {
+        audioElement.pause();
+        audioButton.textContent = 'Reproducir Música'; // Cambia el texto del botón
+      }
+    }
+  </script>
+  
+</body>
+</html>
